@@ -1,7 +1,6 @@
 import 'package:chess_family_clock/screens/clock_screen.dart';
 import 'package:chess_family_clock/screens/gong_screen.dart';
 import 'package:chess_family_clock/screens/screen_960.dart';
-import 'package:chess_family_clock/screens/time_control_screen.dart';
 import 'package:flutter/material.dart';
 
 class SetTimeScreen extends StatefulWidget {

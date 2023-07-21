@@ -57,12 +57,115 @@ class _ClockScreenState extends State<ClockScreen>
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            RotatedBox(
-              quarterTurns: 2,
-              child: GestureDetector(
-                onTap: whiteRunning ? _blancasPausa : null,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              RotatedBox(
+                quarterTurns: 2,
+                child: GestureDetector(
+                  onTap: whiteRunning ? _blancasPausa : null,
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.4,
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: CustomTimer(
+                      controller: _controllerBlancas,
+                      builder: (state, remaining) {
+                        if (state.name == 'finished') {
+                          _controllerBlancas.dispose();
+                          _controllerNegras.dispose();
+                        }
+                        return (state.name == 'finished')
+                            ? const Icon(
+                                Icons.flag_rounded,
+                                color: Colors.red,
+                                size: 150,
+                              )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    (widget.tiempo > 59)
+                                        ? '${remaining.hours} : ${remaining.minutes} : ${remaining.seconds}'
+                                        : '${remaining.minutes} : ${remaining.seconds}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 50,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Jugadas: $jugadasBlancas',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: size.width,
+                height: size.height * 0.1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const SetTimeScreen(),
+                        ),
+                      ),
+                      icon: const Icon(
+                        Icons.home,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        botonPicado = !botonPicado;
+                        if (boton == 1) {
+                          _controllerNegras.start();
+                        } else if (boton == 2) {
+                          _controllerBlancas.start();
+                        }
+
+                        if (!whiteRunning) {
+                          _controllerNegras.pause();
+                          boton = 1;
+                        } else if (!blackRunning) {
+                          _controllerBlancas.pause();
+                          boton = 2;
+                        }
+                      },
+                      icon: Icon(
+                        (botonPicado) ? Icons.pause : Icons.play_arrow,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _controllerBlancas.reset();
+                        _controllerNegras.reset();
+                        jugadasBlancas = 0;
+                        jugadasNegras = 0;
+                      },
+                      icon: const Icon(
+                        Icons.refresh,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
+                onTap: blackRunning ? _negrasPausa : null,
                 child: Container(
                   width: size.width,
                   height: size.height * 0.4,
@@ -72,7 +175,7 @@ class _ClockScreenState extends State<ClockScreen>
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: CustomTimer(
-                    controller: _controllerBlancas,
+                    controller: _controllerNegras,
                     builder: (state, remaining) {
                       if (state.name == 'finished') {
                         _controllerBlancas.dispose();
@@ -98,7 +201,7 @@ class _ClockScreenState extends State<ClockScreen>
                                   ),
                                 ),
                                 Text(
-                                  'Jugadas: $jugadasBlancas',
+                                  'Jugadas: $jugadasNegras',
                                   style: const TextStyle(
                                     color: Colors.white,
                                   ),
@@ -109,109 +212,8 @@ class _ClockScreenState extends State<ClockScreen>
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: size.width,
-              height: size.height * 0.1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            const SetTimeScreen(),
-                      ),
-                    ),
-                    icon: const Icon(
-                      Icons.home,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      botonPicado = !botonPicado;
-                      if (boton == 1) {
-                        _controllerNegras.start();
-                      } else if (boton == 2) {
-                        _controllerBlancas.start();
-                      }
-
-                      if (!whiteRunning) {
-                        _controllerNegras.pause();
-                        boton = 1;
-                      } else if (!blackRunning) {
-                        _controllerBlancas.pause();
-                        boton = 2;
-                      }
-                    },
-                    icon: Icon(
-                      (botonPicado) ? Icons.pause : Icons.play_arrow,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      _controllerBlancas.reset();
-                      _controllerNegras.reset();
-                      jugadasBlancas = 0;
-                      jugadasNegras = 0;
-                    },
-                    icon: const Icon(
-                      Icons.refresh,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: blackRunning ? _negrasPausa : null,
-              child: Container(
-                width: size.width,
-                height: size.height * 0.4,
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: CustomTimer(
-                  controller: _controllerNegras,
-                  builder: (state, remaining) {
-                    if (state.name == 'finished') {
-                      _controllerBlancas.dispose();
-                      _controllerNegras.dispose();
-                    }
-                    return (state.name == 'finished')
-                        ? const Icon(
-                            Icons.flag_rounded,
-                            color: Colors.red,
-                            size: 150,
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                (widget.tiempo > 59)
-                                    ? '${remaining.hours} : ${remaining.minutes} : ${remaining.seconds}'
-                                    : '${remaining.minutes} : ${remaining.seconds}',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 50,
-                                ),
-                              ),
-                              Text(
-                                'Jugadas: $jugadasNegras',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          );
-                  },
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

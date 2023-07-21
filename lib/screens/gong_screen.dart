@@ -26,107 +26,111 @@ class _GongScreenState extends State<GongScreen> {
     Wakelock.enable();
 
     return Scaffold(
-      body: Column(
-        children: [
-          RotatedBox(
-            quarterTurns: 2,
-            child: GestureDetector(
-              onTap: () {
-                _controllerBlancas.reset();
-                _controllerNegras.start();
-              },
-              child: Container(
-                width: size.width,
-                height: size.height * 0.4,
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: CircularCountDownTimer(
-                  controller: _controllerBlancas,
-                  autoStart: false,
-                  isReverse: true,
-                  duration: widget.tiempo,
-                  fillColor: Colors.transparent,
-                  height: 50,
-                  width: 50,
-                  ringColor: Colors.transparent,
-                  textFormat: CountdownTextFormat.MM_SS,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 50,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: size.width,
-            height: size.height * 0.1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                IconButton(
-                  onPressed: () => Navigator.pop(context),
-                  icon: const Icon(
-                    Icons.home,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    _controllerBlancas.pause();
-                    _controllerNegras.pause();
-                  },
-                  icon: const Icon(
-                    Icons.pause,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              RotatedBox(
+                quarterTurns: 2,
+                child: GestureDetector(
+                  onTap: () {
                     _controllerBlancas.reset();
-                    _controllerNegras.reset();
+                    _controllerNegras.start();
                   },
-                  icon: const Icon(
-                    Icons.refresh,
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.4,
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: CircularCountDownTimer(
+                      controller: _controllerBlancas,
+                      autoStart: false,
+                      isReverse: true,
+                      duration: widget.tiempo,
+                      fillColor: Colors.transparent,
+                      height: 50,
+                      width: 50,
+                      ringColor: Colors.transparent,
+                      textFormat: CountdownTextFormat.MM_SS,
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 50,
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              _controllerNegras.reset();
-              _controllerBlancas.start();
-            },
-            child: Container(
-              width: size.width,
-              height: size.height * 0.4,
-              margin: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(20),
               ),
-              child: CircularCountDownTimer(
-                controller: _controllerNegras,
-                autoStart: false,
-                isReverse: true,
-                duration: widget.tiempo,
-                fillColor: Colors.transparent,
-                height: 50,
-                width: 50,
-                ringColor: Colors.transparent,
-                textFormat: CountdownTextFormat.MM_SS,
-                textStyle: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 50,
+              SizedBox(
+                width: size.width,
+                height: size.height * 0.1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(
+                        Icons.home,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _controllerBlancas.pause();
+                        _controllerNegras.pause();
+                      },
+                      icon: const Icon(
+                        Icons.pause,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _controllerBlancas.reset();
+                        _controllerNegras.reset();
+                      },
+                      icon: const Icon(
+                        Icons.refresh,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
+              GestureDetector(
+                onTap: () {
+                  _controllerNegras.reset();
+                  _controllerBlancas.start();
+                },
+                child: Container(
+                  width: size.width,
+                  height: size.height * 0.4,
+                  margin: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: CircularCountDownTimer(
+                    controller: _controllerNegras,
+                    autoStart: false,
+                    isReverse: true,
+                    duration: widget.tiempo,
+                    fillColor: Colors.transparent,
+                    height: 50,
+                    width: 50,
+                    ringColor: Colors.transparent,
+                    textFormat: CountdownTextFormat.MM_SS,
+                    textStyle: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 50,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
