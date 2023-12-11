@@ -69,7 +69,7 @@ class _ClockScreenState extends State<ClockScreen>
                     height: size.height * 0.4,
                     margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: whiteRunning ? Colors.blue : Colors.grey,
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: CustomTimer(
@@ -132,7 +132,8 @@ class _ClockScreenState extends State<ClockScreen>
                     IconButton(
                       onPressed: () {
                         botonPicado = !botonPicado;
-                        if (boton == 1) {
+                        print(botonPicado);
+                        /*if (boton == 1) {
                           _controllerNegras.start();
                         } else if (boton == 2) {
                           _controllerBlancas.start();
@@ -144,10 +145,22 @@ class _ClockScreenState extends State<ClockScreen>
                         } else if (!blackRunning) {
                           _controllerBlancas.pause();
                           boton = 2;
+                        }*/
+                        if (botonPicado) {
+                          _controllerBlancas.pause();
+                          _controllerNegras.pause();
+                        } else {
+                          if (!whiteRunning) {
+                            _controllerNegras.pause();
+                            boton = 1;
+                          } else if (!blackRunning) {
+                            _controllerBlancas.pause();
+                            boton = 2;
+                          }
                         }
                       },
-                      icon: Icon(
-                        (botonPicado) ? Icons.pause : Icons.play_arrow,
+                      icon: const Icon(
+                        Icons.pause,
                       ),
                     ),
                     IconButton(
@@ -171,7 +184,7 @@ class _ClockScreenState extends State<ClockScreen>
                   height: size.height * 0.4,
                   margin: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: blackRunning ? Colors.blue : Colors.grey,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: CustomTimer(

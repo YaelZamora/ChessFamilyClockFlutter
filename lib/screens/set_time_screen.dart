@@ -38,6 +38,7 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
           ),
         ),
         centerTitle: true,
+        leading: const SizedBox(width: 10),
       ),
       body: SingleChildScrollView(
         child: Column(
