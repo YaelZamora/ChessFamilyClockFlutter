@@ -58,6 +58,7 @@ class _ClockScreenState extends State<ClockScreen>
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          //MARK: Inicio de los botones del reloj
           child: Column(
             children: [
               RotatedBox(
@@ -111,6 +112,7 @@ class _ClockScreenState extends State<ClockScreen>
                   ),
                 ),
               ),
+              //MARK: Sección botones de control (Home, pausa y reinicio)
               SizedBox(
                 width: size.width,
                 height: size.height * 0.1,
@@ -132,20 +134,6 @@ class _ClockScreenState extends State<ClockScreen>
                     IconButton(
                       onPressed: () {
                         botonPicado = !botonPicado;
-                        print(botonPicado);
-                        /*if (boton == 1) {
-                          _controllerNegras.start();
-                        } else if (boton == 2) {
-                          _controllerBlancas.start();
-                        }
-
-                        if (!whiteRunning) {
-                          _controllerNegras.pause();
-                          boton = 1;
-                        } else if (!blackRunning) {
-                          _controllerBlancas.pause();
-                          boton = 2;
-                        }*/
                         if (botonPicado) {
                           _controllerBlancas.pause();
                           _controllerNegras.pause();
@@ -177,6 +165,7 @@ class _ClockScreenState extends State<ClockScreen>
                   ],
                 ),
               ),
+              //MARK: Botón de tiempo
               GestureDetector(
                 onTap: blackRunning ? _negrasPausa : null,
                 child: Container(

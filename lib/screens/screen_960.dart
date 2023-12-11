@@ -54,8 +54,10 @@ class Screen960State extends State<Screen960> {
                 fontSize: 20,
               ),
             ),
+            //MARK: Botón para jugar
             TextButton.icon(
               onPressed: () {
+                //MARK: Muestra la ventana emergente
                 showDialog(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(

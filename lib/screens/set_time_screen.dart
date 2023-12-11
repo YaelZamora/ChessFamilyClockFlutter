@@ -23,9 +23,6 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
     final tiempo = TextEditingController();
     final suma = TextEditingController();
 
-    //int tiempoInicial = 3;
-    //int incremento = 2;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -47,6 +44,7 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
               width: size.width,
               height: size.height / 2,
               padding: const EdgeInsets.all(20),
+              //MARK: Asignación de tiempo
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -90,6 +88,7 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                   ScaffoldMessenger.of(context).showSnackBar(proximamente),
               child: const Text('Control de tiempo'),
             ),
+            //MARK: Botón Aceptar
             Container(
               width: size.width,
               height: 50,
@@ -127,6 +126,7 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                 ),
               ),
             ),
+            //MARK: Botones GONG, 960 y HourGlass
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

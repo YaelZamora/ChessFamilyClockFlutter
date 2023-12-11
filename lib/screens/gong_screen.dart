@@ -30,6 +30,7 @@ class _GongScreenState extends State<GongScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              //MARK: Botón de tiempo
               RotatedBox(
                 quarterTurns: 2,
                 child: GestureDetector(
@@ -64,6 +65,7 @@ class _GongScreenState extends State<GongScreen> {
                   ),
                 ),
               ),
+              //MARK: Sección de botones de control (Home, pausa y reinicio)
               SizedBox(
                 width: size.width,
                 height: size.height * 0.1,
@@ -97,6 +99,7 @@ class _GongScreenState extends State<GongScreen> {
                   ],
                 ),
               ),
+              //MARK: Botón de tiempo
               GestureDetector(
                 onTap: () {
                   _controllerNegras.reset();
