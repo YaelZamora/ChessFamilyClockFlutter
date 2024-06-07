@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:chess_family_clock/helper_960.dart';
 import 'package:chess_family_clock/screens/clock_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +16,8 @@ class Screen960State extends State<Screen960> {
   final suma = TextEditingController();
 
   List<String> posicion = ['A', 'C', 'C', 'A', 'T', 'D', 'T', 'R'];
+  int numero = 0;
+  Random aleatorio = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class Screen960State extends State<Screen960> {
             TextButton(
               onPressed: () {
                 setState(() {
-                  posicion.shuffle();
+                  numero = aleatorio.nextInt(7679);
                 });
               },
               child: const Text(
@@ -48,7 +53,7 @@ class Screen960State extends State<Screen960> {
               ),
             ),
             Text(
-              posicion.toString().replaceAll('[', '').replaceAll(']', ''),
+              opcion[numero].opcion,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -134,3 +139,7 @@ class Screen960State extends State<Screen960> {
     );
   }
 }
+
+/*
+
+ */
