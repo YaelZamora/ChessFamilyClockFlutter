@@ -16,12 +16,33 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
   );
 
   final proximamente = const SnackBar(content: Text('Próximamente'));
+  final tiempo = TextEditingController();
+  final suma = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    tiempo.addListener(listener);
+    suma.addListener(listener);
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    tiempo.dispose();
+    suma.dispose();
+    super.dispose();
+  }
+
+  void listener() {
+    final text = tiempo.text;
+    final text2 = suma.text;
+  }
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final tiempo = TextEditingController();
-    final suma = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -49,6 +70,7 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   TextFormField(
+                    controller: tiempo,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       hintText: 'Tiempo inicial',
@@ -62,6 +84,7 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                     onFieldSubmitted: (value) => tiempo.text = value,
                   ),
                   TextFormField(
+                    controller: suma,
                     keyboardType: TextInputType.number,
                     decoration: const InputDecoration(
                       hintText: 'Incremento',

@@ -226,6 +226,7 @@ class _ClockScreenState extends State<ClockScreen>
       (jugadasBlancas == 1) ? null : Wakelock.enable();
       _controllerNegras.start();
       _controllerBlancas.pause();
+      _controllerBlancas.begin = Duration(minutes: widget.tiempo, seconds: (widget.incremento * jugadasBlancas));
       _controllerBlancas.add(Duration(seconds: widget.incremento));
       jugadasBlancas++;
       whiteRunning = false;
@@ -237,6 +238,7 @@ class _ClockScreenState extends State<ClockScreen>
     setState(() {
       _controllerBlancas.start();
       _controllerNegras.pause();
+      _controllerNegras.begin = Duration(minutes: widget.tiempo, seconds: (widget.incremento * jugadasNegras));
       _controllerNegras.add(Duration(seconds: widget.incremento));
       jugadasNegras++;
       blackRunning = false;
