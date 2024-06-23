@@ -44,6 +44,9 @@ class _ClockScreenState extends State<ClockScreen>
   int jugadasNegras = 0;
   int boton = 0;
 
+  final TextEditingController tiempoMinutos = TextEditingController();
+  final TextEditingController tiempoSegundos = TextEditingController();
+
   @override
   void dispose() {
     _controllerBlancas.dispose();
@@ -64,6 +67,55 @@ class _ClockScreenState extends State<ClockScreen>
               RotatedBox(
                 quarterTurns: 2,
                 child: GestureDetector(
+                  onDoubleTap: () {
+                    _controllerBlancas.pause();
+                    _controllerNegras.pause();
+                  },
+                  onLongPress: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        content: SizedBox(
+                          height: 150,
+                          child: Column(
+                            children: [
+                              TextField(
+                                controller: tiempoMinutos,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                    hintText: 'Minutos'
+                                ),
+                              ),
+                              TextField(
+                                controller: tiempoSegundos,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                    hintText: 'Segundos'
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (tiempoMinutos.text.isEmpty) {
+                                    tiempoMinutos.text = '0';
+                                  }
+                                  if (tiempoSegundos.text.isEmpty) {
+                                    tiempoSegundos.text = '0';
+                                  }
+                                  _controllerBlancas.add(
+                                      Duration(
+                                        minutes: int.parse(tiempoMinutos.text),
+                                        seconds: int.parse(tiempoSegundos.text),
+                                      )
+                                  );
+                                },
+                                child: const Text('Aceptar'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                   onTap: whiteRunning ? _blancasPausa : null,
                   child: Container(
                     width: size.width,
@@ -167,6 +219,55 @@ class _ClockScreenState extends State<ClockScreen>
               ),
               //MARK: Botón de tiempo
               GestureDetector(
+                onDoubleTap: () {
+                  _controllerBlancas.pause();
+                  _controllerNegras.pause();
+                },
+                onLongPress: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: SizedBox(
+                        height: 150,
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: tiempoMinutos,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                hintText: 'Minutos'
+                              ),
+                            ),
+                            TextField(
+                              controller: tiempoSegundos,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                  hintText: 'Segundos'
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                if (tiempoMinutos.text.isEmpty) {
+                                  tiempoMinutos.text = '0';
+                                }
+                                if (tiempoSegundos.text.isEmpty) {
+                                  tiempoSegundos.text = '0';
+                                }
+                                _controllerNegras.add(
+                                    Duration(
+                                      minutes: int.parse(tiempoMinutos.text),
+                                      seconds: int.parse(tiempoSegundos.text),
+                                    )
+                                );
+                              },
+                              child: const Text('Aceptar'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
                 onTap: blackRunning ? _negrasPausa : null,
                 child: Container(
                   width: size.width,
