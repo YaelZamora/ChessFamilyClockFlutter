@@ -3,6 +3,8 @@ import 'package:chess_family_clock/screens/gong_screen.dart';
 import 'package:chess_family_clock/screens/screen_960.dart';
 import 'package:flutter/material.dart';
 
+import 'hour_glass.dart';
+
 class SetTimeScreen extends StatefulWidget {
   const SetTimeScreen({super.key});
 
@@ -180,24 +182,25 @@ class _SetTimeScreenState extends State<SetTimeScreen> {
                   ),
                   child: const Text('960'),
                 ),
-                /* TextButton(
+                //TODO: Tenemos que arreglar el HourGlass, no está haciendo el cambio de tiempo.
+                /*TextButton(
                   onPressed: () {
-                    if (tiempoInicial == 0) {
+                    if (tiempo.text.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (BuildContext context) => HourGlass(
-                            tiempo: tiempoInicial,
-                            incremento: incremento,
+                            tiempo: int.parse(tiempo.text),
+                            incremento: 0,
                           ),
                         ),
                       );
                     }
                   },
                   child: const Text('HourGlass'),
-                ), */
+                ),*/
               ],
             ),
           ],
