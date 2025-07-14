@@ -29,19 +29,86 @@ class _HourGlassState extends State<HourGlass> {
     double helpertiempo = widget.tiempo / 2;
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            RotatedBox(
-              quarterTurns: 2,
-              child: GestureDetector(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            children: [
+              RotatedBox(
+                quarterTurns: 2,
+                child: GestureDetector(
+                  onTap: () {
+                    if (jugadasNegras == 1) {
+                      _controllerNegras.start();
+                      isReverseWhite = false;
+                      isReverseBlack = true;
+                    }
+                    jugadasBlancas++;
+                  },
+                  child: Container(
+                    width: size.width,
+                    height: size.height * 0.4,
+                    margin: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: CircularCountDownTimer(
+                      controller: _controllerBlancas,
+                      autoStart: false,
+                      isReverse: isReverseWhite,
+                      duration: helpertiempo.toInt() * 60,
+                      fillColor: Colors.transparent,
+                      height: 50,
+                      width: 50,
+                      ringColor: Colors.transparent,
+                      textFormat: CountdownTextFormat.MM_SS,
+                      textStyle: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 50,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: size.width,
+                height: size.height * 0.1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(
+                        Icons.home,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.play_arrow,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        _controllerNegras.reset();
+                        _controllerBlancas.reset();
+                      },
+                      icon: const Icon(
+                        Icons.refresh,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              GestureDetector(
                 onTap: () {
-                  if (jugadasNegras == 1) {
-                    _controllerNegras.start();
-                    isReverseWhite = false;
-                    isReverseBlack = true;
+                  if (jugadasBlancas == 0) {
+                    _controllerBlancas.start();
+                    isReverseBlack = false;
+                    isReverseWhite = true;
                   }
-                  jugadasBlancas++;
+                  jugadasNegras++;
                 },
                 child: Container(
                   width: size.width,
@@ -52,9 +119,9 @@ class _HourGlassState extends State<HourGlass> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: CircularCountDownTimer(
-                    controller: _controllerBlancas,
+                    controller: _controllerNegras,
                     autoStart: false,
-                    isReverse: isReverseWhite,
+                    isReverse: isReverseBlack,
                     duration: helpertiempo.toInt() * 60,
                     fillColor: Colors.transparent,
                     height: 50,
@@ -69,73 +136,8 @@ class _HourGlassState extends State<HourGlass> {
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              width: size.width,
-              height: size.height * 0.1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(
-                      Icons.home,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.play_arrow,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      _controllerNegras.reset();
-                      _controllerBlancas.reset();
-                    },
-                    icon: const Icon(
-                      Icons.refresh,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                if (jugadasBlancas == 0) {
-                  _controllerBlancas.start();
-                  isReverseBlack = false;
-                  isReverseWhite = true;
-                }
-                jugadasNegras++;
-              },
-              child: Container(
-                width: size.width,
-                height: size.height * 0.4,
-                margin: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: CircularCountDownTimer(
-                  controller: _controllerNegras,
-                  autoStart: false,
-                  isReverse: isReverseBlack,
-                  duration: helpertiempo.toInt() * 60,
-                  fillColor: Colors.transparent,
-                  height: 50,
-                  width: 50,
-                  ringColor: Colors.transparent,
-                  textFormat: CountdownTextFormat.MM_SS,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 50,
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

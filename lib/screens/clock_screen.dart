@@ -1,7 +1,7 @@
 import 'package:chess_family_clock/screens/set_time_screen.dart';
 import 'package:custom_timer/custom_timer.dart';
-import 'package:wakelock/wakelock.dart';
 import 'package:flutter/material.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class ClockScreen extends StatefulWidget {
   const ClockScreen({
@@ -82,16 +82,14 @@ class _ClockScreenState extends State<ClockScreen>
                               TextField(
                                 controller: tiempoMinutos,
                                 keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    hintText: 'Minutos'
-                                ),
+                                decoration:
+                                    const InputDecoration(hintText: 'Minutos'),
                               ),
                               TextField(
                                 controller: tiempoSegundos,
                                 keyboardType: TextInputType.number,
-                                decoration: const InputDecoration(
-                                    hintText: 'Segundos'
-                                ),
+                                decoration:
+                                    const InputDecoration(hintText: 'Segundos'),
                               ),
                               ElevatedButton(
                                 onPressed: () {
@@ -101,12 +99,10 @@ class _ClockScreenState extends State<ClockScreen>
                                   if (tiempoSegundos.text.isEmpty) {
                                     tiempoSegundos.text = '0';
                                   }
-                                  _controllerBlancas.add(
-                                      Duration(
-                                        minutes: int.parse(tiempoMinutos.text),
-                                        seconds: int.parse(tiempoSegundos.text),
-                                      )
-                                  );
+                                  _controllerBlancas.add(Duration(
+                                    minutes: int.parse(tiempoMinutos.text),
+                                    seconds: int.parse(tiempoSegundos.text),
+                                  ));
                                 },
                                 child: const Text('Aceptar'),
                               ),
@@ -234,16 +230,14 @@ class _ClockScreenState extends State<ClockScreen>
                             TextField(
                               controller: tiempoMinutos,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                hintText: 'Minutos'
-                              ),
+                              decoration:
+                                  const InputDecoration(hintText: 'Minutos'),
                             ),
                             TextField(
                               controller: tiempoSegundos,
                               keyboardType: TextInputType.number,
-                              decoration: const InputDecoration(
-                                  hintText: 'Segundos'
-                              ),
+                              decoration:
+                                  const InputDecoration(hintText: 'Segundos'),
                             ),
                             ElevatedButton(
                               onPressed: () {
@@ -253,12 +247,10 @@ class _ClockScreenState extends State<ClockScreen>
                                 if (tiempoSegundos.text.isEmpty) {
                                   tiempoSegundos.text = '0';
                                 }
-                                _controllerNegras.add(
-                                    Duration(
-                                      minutes: int.parse(tiempoMinutos.text),
-                                      seconds: int.parse(tiempoSegundos.text),
-                                    )
-                                );
+                                _controllerNegras.add(Duration(
+                                  minutes: int.parse(tiempoMinutos.text),
+                                  seconds: int.parse(tiempoSegundos.text),
+                                ));
                               },
                               child: const Text('Aceptar'),
                             ),
@@ -324,10 +316,12 @@ class _ClockScreenState extends State<ClockScreen>
 
   void _blancasPausa() {
     setState(() {
-      (jugadasBlancas == 1) ? null : Wakelock.enable();
+      (jugadasBlancas == 1) ? null : WakelockPlus.enabled;
       _controllerNegras.start();
       _controllerBlancas.pause();
-      _controllerBlancas.begin = Duration(minutes: widget.tiempo, seconds: (widget.incremento * jugadasBlancas));
+      _controllerBlancas.begin = Duration(
+          minutes: widget.tiempo,
+          seconds: (widget.incremento * jugadasBlancas));
       _controllerBlancas.add(Duration(seconds: widget.incremento));
       jugadasBlancas++;
       whiteRunning = false;
@@ -339,7 +333,8 @@ class _ClockScreenState extends State<ClockScreen>
     setState(() {
       _controllerBlancas.start();
       _controllerNegras.pause();
-      _controllerNegras.begin = Duration(minutes: widget.tiempo, seconds: (widget.incremento * jugadasNegras));
+      _controllerNegras.begin = Duration(
+          minutes: widget.tiempo, seconds: (widget.incremento * jugadasNegras));
       _controllerNegras.add(Duration(seconds: widget.incremento));
       jugadasNegras++;
       blackRunning = false;
